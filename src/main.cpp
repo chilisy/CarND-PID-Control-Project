@@ -37,8 +37,8 @@ int main()
     
     
     // TODO: Initialize the pid variable.
-    strCtl.Init(0.5, 0.0005, 15.0, 2.0, true);
-    thrCtl.Init(1.0, 0.001, 2.0, 1.0, true);
+    strCtl.Init(0.4, 0.0006, 15.0, 2.0, true);
+    thrCtl.Init(0.5, 0.0001, 3.0, 1.0, true);
     
     h.onMessage([&strCtl, &thrCtl](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
         // "42" at the start of the message means there's a websocket message event.
@@ -66,7 +66,7 @@ int main()
                      * another PID controller to control the speed!
                      */
                     
-                    double desSpeed = 45.0;
+                    double desSpeed = 55.0;
                     
                     strCtl.UpdateError(cte);
                 
