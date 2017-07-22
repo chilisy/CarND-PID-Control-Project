@@ -8,6 +8,7 @@ set(CXX_FLAGS "-Wall")
 set(CMAKE_CXX_FLAGS "${CXX_FLAGS}")
 
 set(sources src/PID.cpp src/main.cpp)
+set(headers src/PID.h src/json.hpp)
 
 include_directories(/usr/local/include)
 link_directories(/usr/local/lib)
@@ -21,6 +22,6 @@ link_directories(/usr/local/Cellar/libuv/1.11.0/lib)
 endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin") 
 
 
-add_executable(pid ${sources})
+add_executable(pid ${sources} ${headers})
 
 target_link_libraries(pid z ssl uv uWS)
