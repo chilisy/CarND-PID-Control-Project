@@ -37,8 +37,16 @@ int main()
     
     
     // TODO: Initialize the pid variable.
-    strCtl.Init(0.4, 0.0006, 15.0, 2.0, true);
-    thrCtl.Init(0.5, 0.0001, 3.0, 1.0, true);
+    strCtl.Init(0.35, 0.0, 11.0, 2.0, true);
+    // parameters for PID-controller were find by manual tuning
+    // P component let the controller react fast by increasing the value, but it also cause oscilation
+    // I component is used to reach stationary accuracy
+    // D component is used to reduce oscilation
+    
+    // A deactivatible low pass filter is added to simulate the latency of steering system, tire
+    
+    
+    thrCtl.Init(0.5, 0.0002, 3.0, 1.0, true);
     
     h.onMessage([&strCtl, &thrCtl](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode) {
         // "42" at the start of the message means there's a websocket message event.
@@ -66,7 +74,7 @@ int main()
                      * another PID controller to control the speed!
                      */
                     
-                    double desSpeed = 55.0;
+                    double desSpeed = 60.0;
                     
                     strCtl.UpdateError(cte);
                 
@@ -77,7 +85,6 @@ int main()
                     
                     throttle_value = -1.0 * thrCtl.TotalError();
                     throttle_value = std::min(std::max(throttle_value, 0.0), 1.0);
-                    
                     
                     // DEBUG
                     std::cout << "CTE: " << cte << " Steering Value: " << steer_value << std::endl;
